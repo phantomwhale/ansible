@@ -2,4 +2,8 @@
   roles:
     - role: elliotweiser.osx-command-line-tools
     - role: geerlingguy.mac.homebrew
+      homebrew_taps:
+        - homebrew/core
+        - homebrew/bundle
+      homebrew_brewfile_dir: .
       tags: ["homebrew"]
