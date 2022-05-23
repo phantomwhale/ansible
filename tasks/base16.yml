@@ -1,0 +1,5 @@
+---
+- name: Checkout latest base16-shell config repository
+  ansible.builtin.git:
+    repo: 'git@github.com:chriskempson/base16-shell.git'
+    dest: "{{ lookup('env', 'HOME') }}/.config/base16-shell"

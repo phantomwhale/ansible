@@ -15,3 +15,9 @@
   tasks:
     - import_tasks: tasks/ssh.yml
       tags: ['ssh']
+
+    - import_tasks: tasks/node.yml
+      tags: ['node']
+
+    - import_tasks: tasks/base16.yml
+      tags: ['base16']
