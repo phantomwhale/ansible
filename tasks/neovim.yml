@@ -1,0 +1,9 @@
+---
+- name: Install node support for neovim
+  shell: "npm install -g neovim"
+
+- name: Install python support for neovim
+  shell: "pip3 install --user --upgrade pynvim"
+
+- name: Install node tooling used by neovim LSP plugins
+  shell: "npm install -g typescript typescript-language-server diagnostic-languageserver eslint prettier"
