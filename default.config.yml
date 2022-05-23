@@ -2,3 +2,9 @@
 source_key: "./.ssh/id_rsa"
 ssh_config: "./.ssh/config"
 dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+
+ruby_versions:
+  - ruby-2.6
+  - ruby-2.7
+  - ruby-3.0
+  - ruby 3.1

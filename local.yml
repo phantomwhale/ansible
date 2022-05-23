@@ -21,3 +21,6 @@
 
     - import_tasks: tasks/base16.yml
       tags: ['base16']
+
+    - import_tasks: tasks/ruby.yml
+      tags: ['ruby']
