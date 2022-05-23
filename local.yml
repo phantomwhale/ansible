@@ -1,4 +1,8 @@
 - hosts: localhost
+
+  vars_files:
+    - default.config.yml
+
   roles:
     - role: elliotweiser.osx-command-line-tools
     - role: geerlingguy.mac.homebrew
@@ -6,4 +10,8 @@
         - homebrew/core
         - homebrew/bundle
       homebrew_brewfile_dir: .
-      tags: ["homebrew"]
+      tags: ['homebrew']
+
+  tasks:
+    - import_tasks: tasks/ssh.yml
+      tags: ['ssh']
