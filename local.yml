@@ -27,3 +27,6 @@
 
     - import_tasks: tasks/neovim.yml
       tags: ["neovim"]
+
+    - import_tasks: tasks/dotfiles.yml
+      tags: ["dotfiles"]
