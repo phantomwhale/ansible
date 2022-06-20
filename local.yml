@@ -13,20 +13,23 @@
       tags: ['homebrew']
 
   tasks:
-    - import_tasks: tasks/ssh.yml
+    - import_tasks: ./tasks/ssh.yml
       tags: ['ssh']
 
-    - import_tasks: tasks/node.yml
+    - import_tasks: ./tasks/node.yml
       tags: ['node']
 
-    - import_tasks: tasks/base16.yml
+    - import_tasks: ./tasks/base16.yml
       tags: ['base16']
 
-    - import_tasks: tasks/ruby.yml
+    - import_tasks: ./tasks/ruby.yml
       tags: ['ruby']
 
-    - import_tasks: tasks/neovim.yml
+    - import_tasks: ./tasks/neovim.yml
       tags: ["neovim"]
 
-    - import_tasks: tasks/dotfiles.yml
+    - import_tasks: ./tasks/dotfiles.yml
       tags: ["dotfiles"]
+
+    - import_tasks: ./tasks/osx.yml
+      tags: ["osx"]

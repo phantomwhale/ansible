@@ -1,0 +1,7 @@
+---
+- name: "Disable periods after two spaces"
+  osx_defaults:
+    domain: "Apple Global Domain"
+    key: NSAutomaticPeriodSubstitutionEnabled
+    type: int
+    value: 0
