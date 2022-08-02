@@ -1,3 +1,4 @@
+tap "bufbuild/buf"
 tap "heroku/brew"
 tap "homebrew/bundle"
 tap "homebrew/cask"
@@ -65,6 +66,7 @@ brew "universal-ctags", args: ["HEAD"]
 brew "wget"
 brew "yarn"
 brew "yq"
+brew "bufbuild/buf/buf"
 brew "heroku/brew/heroku"
 brew "yt-dlp/taps/yt-dlp"
 cask "1password"
