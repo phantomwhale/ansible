@@ -22,14 +22,14 @@
     - import_tasks: ./tasks/base16.yml
       tags: ['base16']
 
-    - import_tasks: ./tasks/ruby.yml
-      tags: ['ruby']
-
     - import_tasks: ./tasks/neovim.yml
       tags: ["neovim"]
 
     - import_tasks: ./tasks/dotfiles.yml
       tags: ["dotfiles"]
+
+    - import_tasks: ./tasks/ruby.yml
+      tags: ['ruby']
 
     - import_tasks: ./tasks/osx.yml
       tags: ["osx"]
