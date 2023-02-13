@@ -1,3 +1,3 @@
 ---
 - name: Install latest node (using fnm)
-  shell: "fnm install --lts"
+  shell: "{{ homebrew_brew_bin_path }}/fnm install --lts"
