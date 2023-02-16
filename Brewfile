@@ -104,3 +104,5 @@ cask "steam"
 cask "tableplus"
 cask "transmission"
 cask "vlc"
+mas "Monodraw", id: 920404675
+mas "Tailscale", id: 1475387142
