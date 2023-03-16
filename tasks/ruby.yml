@@ -4,7 +4,7 @@
   with_items: "{{ ruby_versions }}"
 
 - name: Install ruby gem tools
-  shell: 'PATH=$PATH:{{ homebrew_brew_bin_path }} chruby-exec "$1" -- source $(brew --prefix)/share/chruby/chruby.sh; gem install --no-document timetrap neovim solargraph rubocop rubocop-rails rubocop-rails'
+  shell: 'PATH=$PATH:{{ homebrew_brew_bin_path }} chruby-exec "$1" -- source $(brew --prefix)/share/chruby/chruby.sh; gem install --no-document timetrap neovim solargraph rubocop rubocop-rails rubocop-rspec'
   with_items: "{{ ruby_versions }}"
 
   #shell: '{{ homebrew_brew_bin_path }}/ruby-install --update --no-reinstall {{ item }} -- --with-openssl-dir="$(brew --prefix openssl@1.1)"'
