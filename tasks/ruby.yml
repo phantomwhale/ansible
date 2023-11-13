@@ -4,4 +4,5 @@
   with_items: "{{ ruby_versions }}"
 
 - name: Install ruby gem tools
-  shell: 'for ruby_dir in ~/.rubies/*; do $ruby_dir/bin/gem install --no-document timetrap neovim solargraph rubocop rubocop-rails rubocop-rspec; done'
+  shell: 'PATH=$PATH:{{ homebrew_brew_bin_path }} chruby-exec "$1" -- source $(brew --prefix)/share/chruby/chruby.sh; gem install --no-document bundle-audit timetrap neovim solargraph rubocop rubocop-rails rubocop-rspec'
+  with_items: "{{ ruby_versions }}"
