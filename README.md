@@ -18,3 +18,9 @@ This playbook should install and configures most of the software I use on my Mac
 ## Reference
 
 Much of the Ansible work builds on top of the useful roles and collections shared by [Jeff Geerling](https://github.com/geerlingguy), namely <https://github.com/geerlingguy/ansible-collection-mac>
+
+## Manual Steps
+
+> An incomplete, inexact and inaccurate list of other steps needed post-install that I haven't, can't or won't automate
+
+Install youtube-music: https://github.com/th-ch/youtube-music
