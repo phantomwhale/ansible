@@ -5,3 +5,10 @@
     key: NSAutomaticPeriodSubstitutionEnabled
     type: int
     value: 0
+
+- name: "Stop Mission Control rearranging spaces"
+  osx_defaults:
+    domain: com.apple.dock
+    key: mru-spaces
+    type: bool
+    value: false
