@@ -12,3 +12,10 @@
     key: mru-spaces
     type: bool
     value: false
+
+- name: "Do not reveal wallpaper when clicking on desktop"
+  osx_defaults:
+    domain: com.apple.WindowManager
+    key: EnableStandardClickToShowDesktop
+    type: int
+    value: 0
