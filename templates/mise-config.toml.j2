@@ -1,0 +1,18 @@
+# Managed by Ansible - see `mise_global_tools` in default.config.yml and
+# tasks/mise.yml. Local edits are overwritten on the next playbook run.
+#
+# Machine-local overrides belong in ~/.config/mise/conf.d/, which Ansible
+# does not touch.
+
+[settings]
+# Let per-project .ruby-version files pick the ruby version.
+idiomatic_version_file_enable_tools = ["ruby"]
+
+[settings.ruby]
+# Precompiled binaries only - never fall back to a ruby-build source compile.
+compile = false
+
+[tools]
+{% for name, version in mise_global_tools.items() %}
+{% if name is search('[^A-Za-z0-9_-]') %}"{{ name }}"{% else %}{{ name }}{% endif %} = "{{ version }}"
+{% endfor %}

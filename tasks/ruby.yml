@@ -1,8 +1,11 @@
 ---
-- name: Install rubies
-  shell: 'PATH=$PATH:{{ homebrew_brew_bin_path }} ruby-install --update --no-reinstall --no-install-deps {{ item }}'
-  with_items: "{{ ruby_versions }}"
-
-- name: Install ruby gem tools
-  shell: 'PATH=$PATH:{{ homebrew_brew_bin_path }} chruby-exec "$1" -- source $(brew --prefix)/share/chruby/chruby.sh; gem install --no-document bundle-audit timetrap neovim solargraph rubocop rubocop-rails rubocop-rspec'
-  with_items: "{{ ruby_versions }}"
+# Ruby versions themselves are installed by tasks/mise.yml. This only layers
+# the shared gem tooling into each of them.
+- name: Install ruby gem tools into each mise ruby
+  ansible.builtin.command:
+    cmd: >-
+      {{ homebrew_brew_bin_path }}/mise exec ruby@{{ item }} --
+      gem install --no-document {{ ruby_gems | join(' ') }}
+  loop: "{{ mise_ruby_versions }}"
+  register: ruby_gem_install
+  changed_when: "'Successfully installed' in ruby_gem_install.stdout"

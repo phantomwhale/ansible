@@ -1,9 +1,16 @@
 ---
-- name: Install node support for neovim
-  shell: "eval $({{ homebrew_brew_bin_path }}/fnm env) && npm install -g neovim"
+- name: Install node tooling used by neovim and its LSP plugins
+  ansible.builtin.command:
+    cmd: >-
+      {{ homebrew_brew_bin_path }}/mise exec node --
+      npm install -g {{ neovim_npm_packages | join(' ') }}
+  register: neovim_npm
+  changed_when: neovim_npm.stdout is search('(added|changed|removed) \d+ package')
 
 - name: Install python support for neovim
-  shell: "pip3 install --user --upgrade pynvim"
-
-- name: Install node tooling used by neovim LSP plugins
-  shell: "eval $({{ homebrew_brew_bin_path }}/fnm env) && npm install -g typescript typescript-language-server diagnostic-languageserver eslint prettier"
+  ansible.builtin.command:
+    cmd: >-
+      {{ homebrew_brew_bin_path }}/mise exec python --
+      python -m pip install --upgrade pynvim
+  register: neovim_pynvim
+  changed_when: "'Successfully installed' in neovim_pynvim.stdout"

@@ -1,130 +1,105 @@
 # Mac dev environment - intent record for `brew bundle`.
 # Only top-level (intentionally installed) packages belong here.
 # Transitive dependencies are pulled in automatically by Homebrew.
+#
+# Programming language runtimes and portable dev CLIs are NOT here -
+# they are managed by mise (see default.config.yml / tasks/mise.yml).
+# Homebrew owns: compiled libraries, services, GUI apps, macOS integration,
+# and mise itself (the bootstrap).
 
 # === Taps ===
-tap "1password/tap"
 tap "anomalyco/tap"                 # opencode
 tap "asmvik/formulae"               # yabai (newer fork than koekeishiya)
-tap "bufbuild/buf"                  # protocol buffers
 tap "buildkite/buildkite"
 tap "buildkite/developer-versions"  # pinned pg_partman build
-tap "chase/tap"                     # awrit
-tap "hashicorp/tap"                 # terraform
-tap "homebrew/bundle"
-tap "homebrew/services"
+tap "felixkratz/formulae"           # sketchybar
+tap "getagentseal/codeburn"
 tap "koekeishiya/formulae"          # skhd
-tap "lox/tap"                       # slack-cli
 tap "puma/puma"                     # puma-dev
 tap "schpet/tap"                    # linear cli
-tap "th-ch/youtube-music"
 tap "tinted-theming/tinted"         # tinty
-tap "yt-dlp/taps"
 
-# === Shells & terminals (CLI) ===
-brew "antidote"            # zsh plugin manager
+# === Version / tool manager ===
+# mise must come from Homebrew: it is the bootstrap that installs everything
+# else, and it is not on PATH in the non-interactive shells Ansible uses.
+brew "mise"
+
+# === Shells (CLI) ===
+brew "antidote"            # zsh plugin manager - sourced in .zshrc
 brew "bash"
-brew "carapace"            # multi-shell completion engine
+brew "carapace"            # multi-shell completion engine - sourced in .zshrc
 
 # === Editor ===
 brew "neovim"
 
 # === Core CLI utilities ===
 brew "ast-grep"
-brew "bat"                 # cat with syntax highlighting
-brew "broot"               # interactive tree
+brew "bat"                 # cat with syntax highlighting (aliased to `cat`)
+brew "broot"               # interactive tree - launcher sourced in .zshrc
 brew "btop"                # resource monitor
-brew "ctop"                # docker top
 brew "curlie"              # curl wrapper
-brew "eza"                 # ls replacement
+brew "eza"                 # ls replacement (aliased to `ls`)
 brew "fd"                  # find replacement
-brew "fx"                  # JSON viewer
-brew "fzf"                 # fuzzy finder
-brew "gping"               # ping with graph
+brew "fzf"                 # fuzzy finder - .zshrc keybindings + git aliases
+brew "glow"                # markdown TUI - used by ai_functions.zsh
 brew "htmlq"               # jq for HTML
 brew "httpie"              # curl alternative
 brew "jq"                  # JSON processor
+brew "just"                # command runner
 brew "lftp"                # FTP/SFTP client
-brew "mdless"              # markdown viewer
-brew "parallel"            # GNU parallel
-brew "pstree"
+brew "mdcat"               # markdown pager
 brew "ripgrep"
-brew "rsync"
-brew "sd"                  # sed replacement
-brew "stow"                # dotfiles manager
+brew "sl"
+brew "sponge"              # soak up stdin before writing to the same file
+brew "stow"                # dotfiles manager - used by install-osx.sh
+brew "the_silver_searcher" # `ag` - aliased to `ag --hidden`
 brew "todo-txt"
+brew "tree"
 brew "wget"
 brew "yazi"                # file manager TUI
-brew "yq"                  # YAML processor
-brew "zoxide"              # cd replacement
+# zoxide is initialised in .zshrc, but the zsh-z plugin's `z` alias currently
+# shadows it. Fix the alias in the dotfiles repo or drop this line.
+brew "zoxide"
 
 # === Git / VCS ===
 brew "gh"
 brew "git"
-brew "git-delta"
-brew "git-extras"
-brew "git-filter-repo"
 brew "git-lfs"
-brew "glow"                # markdown TUI
-brew "jj"                  # jujutsu VCS
 brew "lazygit"
-brew "lefthook"            # git hooks
-brew "worktrunk"           # Git worktree manager for parallel AI agents
+brew "worktrunk" # Git worktree manager for parallel AI agents
 
-# === Languages ===
-brew "fnm"                 # Node version manager
-brew "go"
-brew "node"
-brew "openjdk@17"
-brew "rust"
-brew "uv"                  # Python package & tool manager (runs llm)
-brew "yarn"                # Node package manager
-
-# === Ruby ===
-brew "chruby"
-brew "frum"
-brew "mise"
-brew "ruby-install", args: ["HEAD"]
+# === Python tooling ===
+brew "uv" # runs `llm` + `pocketsmith-cli` (see tasks/llm.yml)
 
 # === Build / dev tooling ===
-brew "automake"
-brew "bison"
-brew "ctags", link: false
+brew "ctags", link: false  # driven by git_template post-commit/post-checkout hooks
 brew "luacheck"
-brew "llvm"
-brew "shellcheck"
 brew "shfmt"
-brew "tflint"
+brew "kingfisher"          # secret scanner
 brew "trufflehog"          # secret scanner
 
 # === Cloud / infra ===
 brew "ansible"
-brew "aws-vault"
 brew "awscli"
 brew "docker-compose"
-
-# === Process management ===
-brew "overmind"            # Procfile runner
+brew "k9s"
 
 # === Databases ===
-brew "duckdb"
-brew "kcat"                # Kafka CLI
-brew "libpq@16"
+# keg-only, but force-linked so psql/pg_dump land in /opt/homebrew/bin.
+# Without `link: true`, `brew bundle install` unlinks it and removes them.
+brew "libpq", link: true
 brew "mysql", restart_service: :changed
-brew "pg_partman"
 brew "postgresql@16", restart_service: :changed
 brew "redis", restart_service: :changed
+brew "buildkite/developer-versions/pg_partman@5.2.4"
 
-# === Web servers ===
-brew "nginx"
+# === Process management ===
+brew "puma/puma/puma-dev"
 
 # === Media / graphics ===
 brew "exiftool"
-brew "ffmpeg"
-brew "fftw"
-brew "ghostscript"
-brew "gifski"
-brew "graphviz"
+brew "ffmpeg"              # runtime delegate for yt-dlp stream merging
+brew "ghostscript"         # runtime delegate for imagemagick PDF/EPS
 brew "imagemagick"
 brew "img2pdf"
 brew "marp-cli"            # markdown presentations
@@ -132,37 +107,27 @@ brew "poppler"             # PDF tools
 brew "watchman"            # file watcher
 brew "yt-dlp"
 
-# === Performance / load testing ===
-brew "hey"
-brew "iperf"
-brew "k6"
-
 # === LLM / AI ===
 brew "codex"
-brew "kingfisher"
+brew "anomalyco/tap/opencode"
+brew "getagentseal/codeburn/codeburn"
 # llm: managed via `uv tool` in tasks/llm.yml so `brew upgrade` can't wipe its plugins
 
 # === macOS ===
-brew "mas"                 # Mac App Store CLI
+brew "mas"                 # Mac App Store CLI - required by the `mas` entries below
+brew "tailscale"
+brew "xcodes"              # Xcode version manager
 brew "asmvik/formulae/yabai"
+brew "felixkratz/formulae/sketchybar"
 brew "koekeishiya/formulae/skhd"
 
-# === Misc ===
-brew "keyring"             # Python keyring backend
-brew "libpqxx"             # postgres C++ lib
-
-# === Tap-specific brews ===
-brew "anomalyco/tap/opencode"
-brew "bufbuild/buf/buf"
+# === Buildkite ===
+brew "buildkite/buildkite/bk@3"
 brew "buildkite/buildkite/bktec"
-brew "buildkite/buildkite/buildkite-agent"
-brew "buildkite/buildkite/test-splitter"
-brew "buildkite/developer-versions/pg_partman@5.2.4"
-brew "chase/tap/awrit"
-brew "hashicorp/tap/terraform"
-brew "lox/tap/slack-cli"
-brew "puma/puma/puma-dev"
-brew "schpet/tap/linear"
+brew "buildkite/buildkite/buildkite-agent@3"
+
+# === Other tap-specific brews ===
+brew "schpet/tap/linear" # used by the using-linear / starting-linear-issue skills
 brew "tinted-theming/tinted/tinty"
 
 # === Casks: 1Password ===
@@ -178,9 +143,14 @@ cask "ghostty"
 cask "kitty"
 
 # === Casks: dev tools ===
+cask "aws-vault-binary"
+cask "chromedriver"
 cask "dash"
 cask "mitmproxy"
+cask "ngrok"
 cask "orbstack"
+cask "session-manager-plugin"
+cask "slack-cli"
 
 # === Casks: productivity ===
 cask "cleanshot"
@@ -193,6 +163,7 @@ cask "obsidian"
 cask "raycast"
 
 # === Casks: hardware/peripherals ===
+cask "keymapp"             # ZSA keyboard configurator
 cask "logitune"            # Logitech webcam tuning
 
 # === Casks: communication ===
@@ -204,7 +175,9 @@ cask "calibre"
 cask "gimp"
 cask "vlc"
 cask "yacreader"
-cask "youtube-music"
+
+# === Casks: screencasting ===
+cask "keycastr"
 
 # === Casks: gaming ===
 cask "epic-games"
@@ -220,6 +193,7 @@ cask "font-fira-sans"
 # === Mac App Store ===
 mas "Amphetamine", id: 937_984_704
 mas "GarageBand", id: 682_658_836
+mas "Hidden Bar", id: 1_452_453_066
 mas "ImageDiff", id: 1_602_522_152
 mas "iMovie", id: 408_981_434
 mas "Keynote", id: 409_183_694
@@ -229,6 +203,3 @@ mas "Numbers", id: 409_203_825
 mas "Pages", id: 409_201_541
 mas "Pixea", id: 1_507_782_672
 mas "The Unarchiver", id: 425_424_353
-
-# === Go installs ===
-go "github.com/minio/minio"

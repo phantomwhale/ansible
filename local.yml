@@ -6,9 +6,10 @@
   roles:
     - role: elliotweiser.osx-command-line-tools
     - role: geerlingguy.mac.homebrew
-      homebrew_taps:
-        - homebrew/core
-        - homebrew/bundle
+      # Taps are declared in the Brewfile. homebrew/core is API-backed on
+      # modern Homebrew and tapping it forces a full clone, while
+      # homebrew/bundle and homebrew/services are now built-in commands.
+      homebrew_taps: []
       homebrew_brewfile_dir: .
       tags: ['homebrew']
 
@@ -16,8 +17,9 @@
     - import_tasks: ./tasks/ssh.yml
       tags: ['ssh']
 
-    - import_tasks: ./tasks/node.yml
-      tags: ['node']
+    # mise must run before neovim and ruby - both shell out to `mise exec`.
+    - import_tasks: ./tasks/mise.yml
+      tags: ['mise']
 
     - import_tasks: ./tasks/base16.yml
       tags: ['base16']

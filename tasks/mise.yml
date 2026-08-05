@@ -1,0 +1,35 @@
+---
+# mise owns language runtimes and portable dev CLIs; Homebrew owns everything
+# else. mise itself comes from Homebrew because it is the bootstrap.
+#
+# Every command here uses an absolute path: Ansible's shell/command modules run
+# a non-interactive /bin/sh where neither Homebrew nor mise is on PATH, and
+# `mise activate` is a shell prompt hook that never fires in that context.
+
+- name: Ensure mise config directory exists
+  ansible.builtin.file:
+    path: "{{ lookup('env', 'HOME') }}/.config/mise"
+    state: directory
+    mode: "0755"
+
+- name: Write global mise tool config
+  ansible.builtin.template:
+    src: "{{ playbook_dir }}/templates/mise-config.toml.j2"
+    dest: "{{ lookup('env', 'HOME') }}/.config/mise/config.toml"
+    mode: "0644"
+
+# When every pinned tool is already present, mise writes "mise all tools are
+# installed" to stderr and leaves stdout empty - so empty stdout means no-op.
+- name: Install globally pinned mise tools
+  ansible.builtin.command:
+    cmd: "{{ homebrew_brew_bin_path }}/mise install --yes"
+  register: mise_install
+  changed_when: mise_install.stdout | trim | length > 0
+
+- name: Install additional ruby versions
+  ansible.builtin.command:
+    cmd: >-
+      {{ homebrew_brew_bin_path }}/mise install --yes
+      {{ mise_ruby_versions | map('regex_replace', '^', 'ruby@') | join(' ') }}
+  register: mise_ruby_install
+  changed_when: mise_ruby_install.stdout | trim | length > 0

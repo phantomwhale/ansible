@@ -3,9 +3,58 @@ source_key: "./.ssh/id_rsa"
 ssh_config: "./.ssh/config"
 dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
 
-ruby_versions:
-  - ruby 3.2
-  - ruby 3.3
+# --- mise --------------------------------------------------------------------
+# Single source of truth for language runtimes and portable dev CLIs.
+# Rendered into ~/.config/mise/config.toml by tasks/mise.yml.
+#
+# Anything listed here must NOT also appear in the Brewfile, or Homebrew's
+# /opt/homebrew/bin will shadow the mise copy on PATH.
+mise_global_tools:
+  # Languages
+  go: "latest"
+  java: "temurin-17"
+  node: "lts"
+  python: "3.12"
+  ruby: "3.4"
+  yarn: "1" # stay on the Yarn 1.x classic line
+  # Portable dev CLIs
+  buf: "latest"
+  cilium-cli: "latest"
+  golangci-lint: "latest"
+  goreleaser: "latest"
+  helm: "latest"
+  kubectl: "latest"
+  lefthook: "latest"
+  overmind: "latest"
+  shellcheck: "latest"
+  terraform: "latest"
+  tflint: "latest"
+  # Work / misc
+  bik: "1.17.2"
+  "ubi:ethersync/ethersync": "latest"
+
+# Ruby versions to install and provision gems into, alongside the global
+# `ruby` pin above. Replaces the old ruby-install-format `ruby_versions`.
+mise_ruby_versions:
+  - "3.3"
+  - "3.4"
+
+ruby_gems:
+  - bundle-audit
+  - timetrap
+  - neovim
+  - rubocop
+  - rubocop-rails
+  - rubocop-rspec
+
+# Node tooling neovim's LSP plugins expect on PATH.
+neovim_npm_packages:
+  - neovim
+  - typescript
+  - typescript-language-server
+  - diagnostic-languageserver
+  - eslint
+  - prettier
 
 llm_plugins:
   - llm-anthropic
