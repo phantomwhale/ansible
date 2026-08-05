@@ -1,0 +1,3 @@
+---
+- name: Install llm CLI and plugins (via uv tool)
+  shell: "{{ homebrew_brew_bin_path }}/uv tool install --force llm{% for plugin in llm_plugins %} --with {{ plugin }}{% endfor %}"

@@ -77,6 +77,7 @@ brew "go"
 brew "node"
 brew "openjdk@17"
 brew "rust"
+brew "uv"                  # Python package & tool manager (runs llm)
 brew "yarn"                # Node package manager
 
 # === Ruby ===
@@ -139,7 +140,7 @@ brew "k6"
 # === LLM / AI ===
 brew "codex"
 brew "kingfisher"
-brew "llm"
+# llm: managed via `uv tool` in tasks/llm.yml so `brew upgrade` can't wipe its plugins
 
 # === macOS ===
 brew "mas"                 # Mac App Store CLI

@@ -6,3 +6,6 @@ dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
 ruby_versions:
   - ruby 3.2
   - ruby 3.3
+
+llm_plugins:
+  - llm-anthropic

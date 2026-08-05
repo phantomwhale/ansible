@@ -31,5 +31,8 @@
     - import_tasks: ./tasks/ruby.yml
       tags: ['ruby']
 
+    - import_tasks: ./tasks/llm.yml
+      tags: ['llm']
+
     - import_tasks: ./tasks/osx.yml
       tags: ["osx"]
