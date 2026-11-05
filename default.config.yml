@@ -14,8 +14,8 @@ mise_global_tools:
   go: "latest"
   java: "temurin-17"
   node: "lts"
-  python: "3.12"
-  ruby: "3.4"
+  python: "latest"
+  ruby: "latest"
   yarn: "1" # stay on the Yarn 1.x classic line
   # Portable dev CLIs
   buf: "latest"
@@ -29,9 +29,10 @@ mise_global_tools:
   shellcheck: "latest"
   terraform: "latest"
   tflint: "latest"
-  # Work / misc
-  bik: "1.17.2"
-  "ubi:ethersync/ethersync": "latest"
+  # Personal agent tooling (npm packages managed by mise, so they survive
+  # node version changes)
+  "npm:@earendil-works/pi-coding-agent": "latest"
+  "npm:oh-my-openagent": "latest"
 
 # Ruby versions to install and provision gems into, alongside the global
 # `ruby` pin above. Replaces the old ruby-install-format `ruby_versions`.
