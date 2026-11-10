@@ -29,4 +29,4 @@ Originally built on [Jeff Geerling](https://github.com/geerlingguy)'s <https://g
 
 > An incomplete, inexact and inaccurate list of other steps needed post-install that I haven't, can't or won't automate
 
-Install youtube-music: https://github.com/th-ch/youtube-music
+Install YouTube Music (Pear Desktop, formerly th-ch/youtube-music): download the `YouTube-Music-*-arm64.dmg` from <https://github.com/pear-devs/pear-desktop/releases/latest>.
