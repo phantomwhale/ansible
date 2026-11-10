@@ -18,13 +18,15 @@
     dest: "{{ lookup('env', 'HOME') }}/.config/mise/config.toml"
     mode: "0644"
 
-# When every pinned tool is already present, mise writes "mise all tools are
-# installed" to stderr and leaves stdout empty - so empty stdout means no-op.
+# mise reports progress on stderr only; a run with nothing to do ends with
+# "installed 0 tools". Homebrew's bin is on PATH so the pypi backend can find uv.
 - name: Install globally pinned mise tools
   ansible.builtin.command:
     cmd: "{{ homebrew_brew_bin_path }}/mise install --yes"
+  environment:
+    PATH: "{{ homebrew_brew_bin_path }}:{{ ansible_facts.env.PATH }}"
   register: mise_install
-  changed_when: mise_install.stdout | trim | length > 0
+  changed_when: mise_install.stderr is not search('installed 0 tools')
 
 # Resolve the newest `mise_ruby_series_count` Ruby minor series (e.g. ["3.4", "4.0"])
 # from mise's remote version list. Tagged `ruby` too, because tasks/ruby.yml
@@ -60,4 +62,4 @@
       {{ homebrew_brew_bin_path }}/mise install --yes
       {{ mise_ruby_versions | map('regex_replace', '^', 'ruby@') | join(' ') }}
   register: mise_ruby_install
-  changed_when: mise_ruby_install.stdout | trim | length > 0
+  changed_when: mise_ruby_install.stderr is not search('installed 0 tools')

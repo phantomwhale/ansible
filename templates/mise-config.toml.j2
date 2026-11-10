@@ -13,6 +13,9 @@ idiomatic_version_file_enable_tools = ["ruby"]
 compile = false
 
 [tools]
-{% for name, version in mise_global_tools.items() %}
-{% if name is search('[^A-Za-z0-9_-]') %}"{{ name }}"{% else %}{{ name }}{% endif %} = "{{ version }}"
+{# A tool's value is a version string, or a mapping of tool options rendered as
+   a TOML inline table. JSON strings and string arrays are valid TOML values. #}
+{% for name, value in mise_global_tools.items() %}
+{% if name is search('[^A-Za-z0-9_-]') %}"{{ name }}"{% else %}{{ name }}{% endif %} = {% if value is mapping %}{ {% for k, v in value.items() %}{{ k }} = {{ v | to_json }}{{ ", " if not loop.last }}{% endfor %} }{% else %}{{ value | to_json }}{% endif %}
+
 {% endfor %}

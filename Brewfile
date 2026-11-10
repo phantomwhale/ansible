@@ -74,7 +74,7 @@ brew "lazygit"             # aliased to `lg`
 brew "worktrunk"           # `wt` - git worktree manager for parallel AI agents
 
 # === Python tooling ===
-brew "uv" # runs `llm` + `pocketsmith-cli` (see tasks/llm.yml)
+brew "uv" # used by mise's pypi backend (llm) and for `uv tool` installs
 
 # === Cloud / infra ===
 brew "ansible"
@@ -103,7 +103,6 @@ brew "yt-dlp"
 brew "anomalyco/tap/opencode"
 brew "getagentseal/codeburn/codeburn"
 brew "nono"                # agent sandbox - profiles in dotfiles
-# llm: managed via `uv tool` in tasks/llm.yml so `brew upgrade` can't wipe its plugins
 
 # === macOS ===
 brew "mas"                 # Mac App Store CLI - required by the `mas` entries below

@@ -34,6 +34,11 @@ mise_global_tools:
   # node version changes)
   "npm:@earendil-works/pi-coding-agent": "latest"
   "npm:oh-my-openagent": "latest"
+  # Python CLIs, each in its own uv-managed environment. `with` adds plugins
+  # to the tool's environment, so they survive upgrades.
+  "pypi:llm":
+    version: "latest"
+    with: ["llm-anthropic"]
 
 # How many of the newest Ruby minor series (e.g. 4.0 and 3.4) to install and
 # provision gems into, alongside the global `ruby` pin above. The series are
@@ -47,6 +52,3 @@ ruby_gems:
   - rubocop
   - rubocop-rails
   - rubocop-rspec
-
-llm_plugins:
-  - llm-anthropic
