@@ -11,6 +11,12 @@
       # homebrew/bundle and homebrew/services are now built-in commands.
       homebrew_taps: []
       homebrew_brewfile_dir: .
+      # Install missing Brewfile entries only; never upgrade outdated ones.
+      # The role runs `brew bundle` without a TTY, so any upgrade that needs
+      # sudo (mas apps, some casks) fails even with --ask-become-pass.
+      # Upgrade interactively instead: `brew bundle upgrade` or `brew upgrade`.
+      environment:
+        HOMEBREW_BUNDLE_NO_UPGRADE: "1"
       tags: ['homebrew']
 
   tasks:
