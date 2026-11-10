@@ -16,19 +16,16 @@ mise_global_tools:
   node: "lts"
   python: "latest"
   ruby: "latest"
+  rust: "latest"
   yarn: "1" # stay on the Yarn 1.x classic line
   # Portable dev CLIs
-  buf: "latest"
-  cilium-cli: "latest"
   golangci-lint: "latest"
   goreleaser: "latest"
-  helm: "latest"
-  kubectl: "latest"
-  lefthook: "latest"
-  overmind: "latest"
   shellcheck: "latest"
   terraform: "latest"
   tflint: "latest"
+  # Buildkite-only tools (kubectl, helm, cilium-cli, overmind, k9s, buf,
+  # lefthook, ...) come from ~/code/BK/buildkite/Brewfile and mise.toml.
   # Personal agent tooling (npm packages managed by mise, so they survive
   # node version changes)
   "npm:@earendil-works/pi-coding-agent": "latest"
