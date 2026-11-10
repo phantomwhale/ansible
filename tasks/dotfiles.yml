@@ -17,5 +17,19 @@
     name: 'remote.origin.url'
     value: 'git@github.com:phantomwhale/dotfiles.git'
 
+# `stow --restow` prints nothing, so a change is detected by comparing the
+# links into ~/.dotfiles near the top of $HOME before and after. Large trees
+# that never hold stowed links are skipped to keep the scan fast.
 - name: Stow dotfiles
-  shell: cd $HOME/.dotfiles && ./install-osx.sh
+  ansible.builtin.shell:
+    cmd: |
+      links() {
+        find "$HOME" -maxdepth 4 \( -path "$HOME/code" -o -path "$HOME/Library" \
+          -o -path "$HOME/.local/share" -o -path "$HOME/node_modules" -o -path "$HOME/.Trash" \) \
+          -prune -o -type l -lname '*.dotfiles/*' -print 2>/dev/null | sort
+      }
+      before=$(links)
+      cd "$HOME/.dotfiles" && ./install-osx.sh
+      [ "$before" = "$(links)" ] || echo "dotfiles links changed"
+  register: dotfiles_stow
+  changed_when: dotfiles_stow.stdout is search('dotfiles links changed')
