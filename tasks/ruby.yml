@@ -5,7 +5,7 @@
   ansible.builtin.command:
     cmd: >-
       {{ homebrew_brew_bin_path }}/mise exec ruby@{{ item }} --
-      gem install --no-document {{ ruby_gems | join(' ') }}
+      gem install --conservative --no-document {{ ruby_gems | join(' ') }}
   loop: "{{ mise_ruby_versions }}"
   register: ruby_gem_install
   changed_when: "'Successfully installed' in ruby_gem_install.stdout"
