@@ -39,6 +39,7 @@ mise_global_tools:
   "pypi:llm":
     version: "latest"
     with: ["llm-anthropic"]
+  "pypi:pocketsmith-cli": "latest"
 
 # How many of the newest Ruby minor series (e.g. 4.0 and 3.4) to install and
 # provision gems into, alongside the global `ruby` pin above. The series are
