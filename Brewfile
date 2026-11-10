@@ -50,9 +50,9 @@ brew "sponge"              # soak up stdin before writing to the same file
 brew "stow"                # dotfiles manager - used by install-osx.sh
 brew "todo-txt"
 brew "tree"
-brew "tuios"              # terminal multiplexer TUI
+brew "tuios"               # terminal multiplexer TUI
 brew "yazi"                # file manager TUI
-brew "zoxide"             # `z` / `zi` - initialised in .zshrc, used by telescope-zoxide
+brew "zoxide"              # `z` / `zi` - initialised in .zshrc, used by telescope-zoxide
 
 # === Markdown viewers ===
 brew "glow"                # markdown TUI - used by ai_functions.zsh
@@ -61,7 +61,7 @@ brew "mdcat"               # markdown pager
 # === Network / HTTP ===
 brew "httpie"              # `http` / `https`
 brew "lftp"                # FTP/SFTP client
-brew "rsync"              # current rsync over the macOS default
+brew "rsync"               # current rsync over the macOS default
 brew "wget"
 
 # === Git / VCS ===
@@ -77,7 +77,7 @@ brew "uv" # used by mise's pypi backend (llm) and for `uv tool` installs
 # === Cloud / infra ===
 brew "ansible"
 brew "awscli"
-brew "aws-vault"           # maintained ByteNess fork; replaces the discontinued aws-vault-binary cask
+brew "aws-vault"             # maintained ByteNess fork; replaces the discontinued aws-vault-binary cask
 brew "docker-compose"
 brew "datadog-labs/pack/pup" # Datadog CLI - config dir set in .zshenv
 
@@ -100,12 +100,13 @@ brew "yt-dlp"
 # === LLM / AI ===
 brew "anomalyco/tap/opencode"
 brew "getagentseal/codeburn/codeburn"
-brew "nono"                # agent sandbox - profiles in dotfiles
+brew "nono" # agent sandbox - profiles in dotfiles
 
 # === macOS ===
 brew "mas"                 # Mac App Store CLI - required by the `mas` entries below
 brew "xcodes"              # Xcode version manager
 brew "terminal-notifier"   # herdr system toasts; without it they fall back to osascript (Script Editor)
+brew "thaw"
 brew "asmvik/formulae/yabai"
 brew "asmvik/formulae/skhd"
 
@@ -165,7 +166,7 @@ cask "keycastr"
 
 # === Casks: gaming ===
 cask "epic-games"
-cask "highball"            # run Windows games
+cask "highball" # run Windows games
 cask "steam"
 
 # === Casks: fonts ===
@@ -178,7 +179,6 @@ cask "font-fira-sans"
 # === Mac App Store ===
 mas "Amphetamine", id: 937_984_704
 mas "GarageBand", id: 682_658_836
-mas "Hidden Bar", id: 1_452_453_066
 mas "ImageDiff", id: 1_602_522_152
 mas "iMovie", id: 408_981_434
 mas "Keynote", id: 409_183_694
