@@ -1,0 +1,20 @@
+---
+# Plugins (lazy-lock.json) and the Mason install list both live in the stowed
+# dotfiles, so this runs after them. `mise exec` puts mise's node, go and ruby
+# on PATH for Mason's npm, go and gem based installers.
+#
+# `Lazy! install` only installs missing plugins (at their locked versions) and
+# never changes existing ones; `MasonToolsInstallSync` blocks until Mason has
+# installed everything on the list. Headless nvim prints nothing, so a change is
+# detected by comparing the installed plugin and Mason package directories.
+- name: Install neovim plugins and Mason tools
+  ansible.builtin.shell:
+    cmd: |
+      data="$HOME/.local/share/nvim"
+      before=$(ls "$data/lazy" "$data/mason/packages" 2>/dev/null)
+      {{ homebrew_brew_bin_path }}/mise exec -- \
+        {{ homebrew_brew_bin_path }}/nvim --headless "+Lazy! install" "+MasonToolsInstallSync" +qa
+      after=$(ls "$data/lazy" "$data/mason/packages" 2>/dev/null)
+      [ "$before" = "$after" ] || echo "installed new plugins or Mason packages"
+  register: nvim_install
+  changed_when: nvim_install.stdout | length > 0

@@ -10,16 +10,19 @@
     - import_tasks: ./tasks/ssh.yml
       tags: ['ssh']
 
-    # mise must run before ruby, which shells out to `mise exec`.
+    # mise must run before neovim and ruby - both shell out to `mise exec`.
     - import_tasks: ./tasks/mise.yml
       tags: ['mise']
 
     - import_tasks: ./tasks/dotfiles.yml
       tags: ["dotfiles"]
 
-    # tinty reads its config from the stowed dotfiles.
+    # tinty and neovim read their config from the stowed dotfiles.
     - import_tasks: ./tasks/tinty.yml
       tags: ['tinty']
+
+    - import_tasks: ./tasks/neovim.yml
+      tags: ['neovim']
 
     - import_tasks: ./tasks/ruby.yml
       tags: ['ruby']
