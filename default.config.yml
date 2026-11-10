@@ -44,19 +44,9 @@ mise_ruby_series_count: 2
 ruby_gems:
   - bundle-audit
   - timetrap
-  - neovim
   - rubocop
   - rubocop-rails
   - rubocop-rspec
-
-# Node tooling neovim's LSP plugins expect on PATH.
-neovim_npm_packages:
-  - neovim
-  - typescript
-  - typescript-language-server
-  - diagnostic-languageserver
-  - eslint
-  - prettier
 
 llm_plugins:
   - llm-anthropic
