@@ -1,0 +1,15 @@
+---
+# Homebrew itself is installed during bootstrap (see README). This only applies
+# the Brewfile, which declares its own taps.
+#
+# Install missing entries only; never upgrade outdated ones. `brew bundle` runs
+# here without a TTY, so any upgrade that needs sudo (mas apps, some casks)
+# can't prompt for a password and fails. Upgrade interactively instead:
+# `brew bundle upgrade` or `brew upgrade`.
+- name: Install Brewfile packages
+  ansible.builtin.command:
+    cmd: "{{ homebrew_brew_bin_path }}/brew bundle install --file {{ playbook_dir }}/Brewfile"
+  environment:
+    HOMEBREW_BUNDLE_NO_UPGRADE: "1"
+  register: brew_bundle
+  changed_when: brew_bundle.stdout is search('^(Installing|Tapping|Upgrading) ', multiline=True)

@@ -3,6 +3,10 @@ source_key: "./.ssh/id_rsa"
 ssh_config: "./.ssh/config"
 dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
 
+# Apple Silicon Homebrew prefix. Tasks call brew-installed binaries by absolute
+# path: Ansible's command module runs without the shell PATH set up by .zshrc.
+homebrew_brew_bin_path: /opt/homebrew/bin
+
 # --- mise --------------------------------------------------------------------
 # Single source of truth for language runtimes and portable dev CLIs.
 # Rendered into ~/.config/mise/config.toml by tasks/mise.yml.

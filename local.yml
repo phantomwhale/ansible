@@ -3,23 +3,10 @@
   vars_files:
     - default.config.yml
 
-  roles:
-    - role: elliotweiser.osx-command-line-tools
-    - role: geerlingguy.mac.homebrew
-      # Taps are declared in the Brewfile. homebrew/core is API-backed on
-      # modern Homebrew and tapping it forces a full clone, while
-      # homebrew/bundle and homebrew/services are now built-in commands.
-      homebrew_taps: []
-      homebrew_brewfile_dir: .
-      # Install missing Brewfile entries only; never upgrade outdated ones.
-      # The role runs `brew bundle` without a TTY, so any upgrade that needs
-      # sudo (mas apps, some casks) fails even with --ask-become-pass.
-      # Upgrade interactively instead: `brew bundle upgrade` or `brew upgrade`.
-      environment:
-        HOMEBREW_BUNDLE_NO_UPGRADE: "1"
+  tasks:
+    - import_tasks: ./tasks/homebrew.yml
       tags: ['homebrew']
 
-  tasks:
     - import_tasks: ./tasks/ssh.yml
       tags: ['ssh']
 
