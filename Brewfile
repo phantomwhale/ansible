@@ -15,7 +15,6 @@ tap "anomalyco/tap"         # opencode
 tap "asmvik/formulae"       # yabai + skhd (maintained fork of koekeishiya)
 tap "buildkite/buildkite"
 tap "datadog-labs/pack"     # pup
-tap "felixkratz/formulae"   # sketchybar
 tap "getagentseal/codeburn"
 tap "lox/tap"               # slack-cli (Slack reader CLI, not Slack's official `slack`)
 tap "schpet/tap"            # linear cli
@@ -34,7 +33,6 @@ brew "carapace"            # multi-shell completion engine - sourced in .zshrc
 # === Editor ===
 brew "neovim"
 brew "tree-sitter-cli"     # nvim-treesitter `main` branch compiles parsers with it
-brew "luacheck"
 brew "shfmt"               # none-ls formatter
 
 # === Core CLI utilities ===
@@ -109,7 +107,6 @@ brew "mas"                 # Mac App Store CLI - required by the `mas` entries b
 brew "xcodes"              # Xcode version manager
 brew "asmvik/formulae/yabai"
 brew "asmvik/formulae/skhd"
-brew "felixkratz/formulae/sketchybar"
 
 # === Buildkite ===
 brew "buildkite/buildkite/bk@3"
