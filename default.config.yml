@@ -14,7 +14,8 @@ homebrew_brew_bin_path: /opt/homebrew/bin
 # Anything listed here must NOT also appear in the Brewfile, or Homebrew's
 # /opt/homebrew/bin will shadow the mise copy on PATH.
 mise_global_tools:
-  # Languages
+  # Languages and runtimes
+  bun: "latest" # also the runtime for omp below
   go: "latest"
   java: "temurin-17"
   node: "lts"
@@ -31,8 +32,9 @@ mise_global_tools:
   # Buildkite-only tools (kubectl, helm, cilium-cli, overmind, k9s, buf,
   # lefthook, ...) come from ~/code/BK/buildkite/Brewfile and mise.toml.
   # Personal agent tooling (npm packages managed by mise, so they survive
-  # node version changes)
+  # node version changes). omp's launcher runs on the mise `bun` above.
   "npm:@earendil-works/pi-coding-agent": "latest"
+  "npm:@oh-my-pi/pi-coding-agent": "latest"
   "npm:oh-my-openagent": "latest"
   # Python CLIs, each in its own uv-managed environment. `with` adds plugins
   # to the tool's environment, so they survive upgrades.
