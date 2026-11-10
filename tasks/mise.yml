@@ -26,6 +26,34 @@
   register: mise_install
   changed_when: mise_install.stdout | trim | length > 0
 
+# Resolve the newest `mise_ruby_series_count` Ruby minor series (e.g. ["3.4", "4.0"])
+# from mise's remote version list. Tagged `ruby` too, because tasks/ruby.yml
+# loops over the result and must work when run with `--tags ruby` alone.
+- name: List available ruby versions
+  ansible.builtin.command:
+    cmd: "{{ homebrew_brew_bin_path }}/mise ls-remote ruby"
+  register: mise_ruby_remote
+  changed_when: false
+  check_mode: false
+  tags: ['ruby']
+
+- name: Pick the latest ruby minor series
+  ansible.builtin.set_fact:
+    mise_ruby_versions: >-
+      {{ (mise_ruby_remote.stdout_lines
+          | select('match', '^[0-9]+[.][0-9]+[.][0-9]+$')
+          | map('regex_search', '^[0-9]+[.][0-9]+')
+          | unique
+          | community.general.version_sort)[-mise_ruby_series_count:] }}
+  tags: ['ruby']
+
+- name: Check enough ruby series were found
+  ansible.builtin.assert:
+    that: mise_ruby_versions | length == mise_ruby_series_count
+    fail_msg: "Expected {{ mise_ruby_series_count }} ruby series from `mise ls-remote ruby`, got {{ mise_ruby_versions }}"
+    quiet: true
+  tags: ['ruby']
+
 - name: Install additional ruby versions
   ansible.builtin.command:
     cmd: >-

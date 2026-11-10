@@ -31,11 +31,11 @@ mise_global_tools:
   "npm:@earendil-works/pi-coding-agent": "latest"
   "npm:oh-my-openagent": "latest"
 
-# Ruby versions to install and provision gems into, alongside the global
-# `ruby` pin above. Replaces the old ruby-install-format `ruby_versions`.
-mise_ruby_versions:
-  - "3.3"
-  - "3.4"
+# How many of the newest Ruby minor series (e.g. 4.0 and 3.4) to install and
+# provision gems into, alongside the global `ruby` pin above. The series are
+# resolved from `mise ls-remote ruby` on each run (see tasks/mise.yml), so a
+# new Ruby release is picked up without editing this file.
+mise_ruby_series_count: 2
 
 ruby_gems:
   - bundle-audit
