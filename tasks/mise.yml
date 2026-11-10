@@ -12,22 +12,6 @@
     state: directory
     mode: "0755"
 
-- name: Write global mise tool config
-  ansible.builtin.template:
-    src: "{{ playbook_dir }}/templates/mise-config.toml.j2"
-    dest: "{{ lookup('env', 'HOME') }}/.config/mise/config.toml"
-    mode: "0644"
-
-# mise reports progress on stderr only; a run with nothing to do ends with
-# "installed 0 tools". Homebrew's bin is on PATH so the pypi backend can find uv.
-- name: Install globally pinned mise tools
-  ansible.builtin.command:
-    cmd: "{{ homebrew_brew_bin_path }}/mise install --yes"
-  environment:
-    PATH: "{{ homebrew_brew_bin_path }}:{{ ansible_facts.env.PATH }}"
-  register: mise_install
-  changed_when: mise_install.stderr is not search('installed 0 tools')
-
 # Resolve the newest `mise_ruby_series_count` Ruby minor series (e.g. ["3.4", "4.0"])
 # from mise's remote version list. Tagged `ruby` too, because tasks/ruby.yml
 # loops over the result and must work when run with `--tags ruby` alone.
@@ -56,10 +40,24 @@
     quiet: true
   tags: ['ruby']
 
-- name: Install additional ruby versions
+# The Ruby series are written into the global config as extra `ruby` versions
+# (mise's first listed version stays the default), so `mise install` installs
+# them and `mise prune` keeps them.
+- name: Write global mise tool config
+  ansible.builtin.template:
+    src: "{{ playbook_dir }}/templates/mise-config.toml.j2"
+    dest: "{{ lookup('env', 'HOME') }}/.config/mise/config.toml"
+    mode: "0644"
+  vars:
+    mise_rendered_tools: >-
+      {{ mise_global_tools | combine({'ruby': [mise_global_tools.ruby] + mise_ruby_versions}) }}
+
+# mise reports progress on stderr only; a run with nothing to do ends with
+# "installed 0 tools". Homebrew's bin is on PATH so the pypi backend can find uv.
+- name: Install globally pinned mise tools
   ansible.builtin.command:
-    cmd: >-
-      {{ homebrew_brew_bin_path }}/mise install --yes
-      {{ mise_ruby_versions | map('regex_replace', '^', 'ruby@') | join(' ') }}
-  register: mise_ruby_install
-  changed_when: mise_ruby_install.stderr is not search('installed 0 tools')
+    cmd: "{{ homebrew_brew_bin_path }}/mise install --yes"
+  environment:
+    PATH: "{{ homebrew_brew_bin_path }}:{{ ansible_facts.env.PATH }}"
+  register: mise_install
+  changed_when: mise_install.stderr is not search('installed 0 tools')
