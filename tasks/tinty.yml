@@ -1,0 +1,10 @@
+---
+# tinty clones the theme repos listed in ~/.config/tinted-theming/tinty/config.toml
+# (stowed from the dotfiles repo), so this must run after the dotfiles are stowed.
+# .zshrc and kitty.conf read the files tinty generates; nothing uses standalone
+# base16/tinted-shell checkouts any more.
+- name: Install tinty theme repositories
+  ansible.builtin.command:
+    cmd: "{{ homebrew_brew_bin_path }}/tinty install"
+  register: tinty_install
+  changed_when: tinty_install.stdout_lines | reject('search', 'already installed') | list | length > 0
