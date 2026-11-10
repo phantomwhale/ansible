@@ -105,6 +105,7 @@ brew "nono"                # agent sandbox - profiles in dotfiles
 # === macOS ===
 brew "mas"                 # Mac App Store CLI - required by the `mas` entries below
 brew "xcodes"              # Xcode version manager
+brew "terminal-notifier"   # herdr system toasts; without it they fall back to osascript (Script Editor)
 brew "asmvik/formulae/yabai"
 brew "asmvik/formulae/skhd"
 
