@@ -1,10 +1,14 @@
 ---
+# Clone only. The dotfiles repo is edited and committed locally, and the git
+# module's update resets an existing checkout hard to origin/<version>, which
+# silently discards unpushed commits.
 - name: Cloning .dotfiles
   git:
     repo: 'https://github.com/phantomwhale/dotfiles.git'
     dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
     accept_hostkey: yes
     version: master
+    update: false
 
 - name: Fix git remote
   git_config:
