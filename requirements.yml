@@ -3,4 +3,5 @@ roles:
   - name: elliotweiser.osx-command-line-tools
 collections:
   - name: geerlingguy.mac
+    version: ">=5.0.0" # earlier versions use injected ansible_* fact vars, deprecated in ansible-core 2.24
   - name: community.general
